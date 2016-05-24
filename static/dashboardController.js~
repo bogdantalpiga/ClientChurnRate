@@ -1,0 +1,26 @@
+var app=angular.module('dashboardController',['ui.router'])
+
+var SERVER='http://localhost:5000'
+app.controller('dashboardController',function($scope,$http,$state,$rootScope){
+$scope.token="";
+function constructor(){
+        if(!$rootScope.token){
+            $state.go('home');
+        }else{
+            $scope.token=$rootScope.token
+            // console.log($scope.token);
+            // var req = {
+            //     method: 'GET',
+            //     url: SERVER+'/intrebariProf',
+            //     headers: {
+            //         'Authorization': $scope.token
+            //     }
+                
+            // }
+        }
+            
+}
+    
+constructor();
+window.sc=$scope;
+})

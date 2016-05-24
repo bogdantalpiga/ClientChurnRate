@@ -1,0 +1,97 @@
+<div>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+        <!--    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> -->
+            <a class="navbar-brand">MagOnline</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              
+              <li><a ng-click="getVariabiles()" >Variabiles</a></li>
+              <li><a ng-click="analyse()" >Analyse</a></li>
+              <li><a ng-click="getDemoSet()" >Demo predict</a></li>
+              <li ><a ng-click="logout()">New model</a></li>
+              
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+      <div ng-show='panel===2'>
+      	<!-- <p>{{variabiles}}</p> -->
+      	<canvas id="bar" class="chart chart-bar"
+  			chart-data="data" chart-labels="labels"> chart-series="series"
+		</canvas>
+      </div>
+      <div ng-show='panel===3'>
+      	<canvas id="bar_analyse" class="chart chart-bar"
+  			chart-data="data" chart-labels="labels"> chart-series="series"
+		</canvas>
+      </div>
+      <div ng-show="panel===4">
+      	<div calss="container">
+      		<!-- <p>{{item}}</p> -->
+      		<table data-toggle="table"  id="table" class="table"  >
+			    <thead>
+			        <tr>
+			        <th>Select</th>
+			        <th  >customerID</th>
+			        <th  >gender</th>
+			        <th  >SeniorCitizen</th>
+			        <th  >Partner</th>
+			        <th  >Dependents</th>
+			        <th  >tenure</th>
+			        <th  >PhoneService</th>
+			        <th  >MultipleLines</th>
+			        <th  >InternetService</th>
+			        <th  >OnlineSecurity</th>
+			        <th  >OnlineBackup</th>
+			        <th  >DeviceProtection</th>
+			        <th  >TechSupport</th>
+			        <th  >StreamingTV</th>
+			        <th  >StreamingMovies</th>
+			        <th  >Contract</th>
+			        <th  >PaperlessBilling</th>
+			        <th  >PaymentMethod</th>
+			        <th  >MonthlyCharges</th>
+			        <th  >TotalCharges</th>
+			        
+			        </tr>
+			     </thead>
+			     <tr ng-repeat="item in demoSet" ng-class="{notChurn: item.predictedChurn === 0 , churn : item.predictedChurn === 1}">
+			     	<td><label><input type="checkbox" ng-model="item.checked" ng-checked="item.checked"/></label></td>
+			     	<td  >{{item.customerID}}</td>
+			        <td  >{{item.gender}}</td>
+			        <td  >{{item.SeniorCitizen}}</td>
+			        <td  >{{item.Partner}}</td>
+			        <td  >{{item.Dependents}}</td>
+			        <td  >{{item.tenure}}</td>
+			        <td  >{{item.PhoneService}}</td>
+			        <td  >{{item.MultipleLines}}</td>
+			        <td  >{{item.InternetService}}</td>
+			        <td  >{{item.OnlineSecurity}}</td>
+			        <td  >{{item.OnlineBackup}}</td>
+			        <td  >{{item.DeviceProtection}}</td>
+			        <td  >{{item.TechSupport}}</td>
+			        <td  >{{item.StreamingTV}}</td>
+			        <td  >{{item.StreamingMovies}}</td>
+			        <td  >{{item.Contract}}</td>
+			        <td  >{{item.PaperlessBilling}}</td>
+			        <td  >{{item.PaymentMethod}}</td>
+			        <td  >{{item.MonthlyCharges}}</td>
+			        <td  >{{item.TotalCharges}}</td>
+			        
+			     </tr>
+			</table>
+			<button ng-click="predict()">Predict</button>
+      	</div>
+      </div>
+</div>
+</div>

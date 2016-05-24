@@ -1,0 +1,52 @@
+customerID          7043 non-null object
+gender              7043 non-null object
+SeniorCitizen       7043 non-null int64
+Partner             7043 non-null object
+Dependents          7043 non-null object
+tenure              7043 non-null int64
+PhoneService        7043 non-null object
+	MultipleLines       7043 non-null object
+	InternetService     7043 non-null object
+	OnlineSecurity      7043 non-null object
+	OnlineBackup        7043 non-null object
+
+	DeviceProtection    7043 non-null object
+	TechSupport         7043 non-null object
+	StreamingTV         7043 non-null object
+	StreamingMovies     7043 non-null object
+	Contract            7043 non-null object
+PaperlessBilling    7043 non-null object
+	PaymentMethod       7043 non-null object
+MonthlyCharges      7043 non-null float64
+TotalCharges        7043 non-null object
+Churn               7043 non-null object
+
+
+>>> df['MultipleLines'].unique()
+array(['No phone service', 'No', 'Yes'], dtype=object)
+>>> df['InternetService'].unique()
+array(['DSL', 'Fiber optic', 'No'], dtype=object)
+>>> df['OnlineSecurity'].unique()
+array(['No', 'Yes', 'No internet service'], dtype=object)
+>>> df['OnlineBackup'].unique()
+array(['Yes', 'No', 'No internet service'], dtype=object)
+>>> df['DeviceProtection'].unique()
+array(['No', 'Yes', 'No internet service'], dtype=object)
+>>> df['TechSupport'].unique()
+array(['No', 'Yes', 'No internet service'], dtype=object)
+>>> df['StreamingTV'].unique()
+array(['No', 'Yes', 'No internet service'], dtype=object)
+>>> df['StreamingMovies'].unique()
+array(['No', 'Yes', 'No internet service'], dtype=object)
+>>> df['Contract'].unique()
+array(['Month-to-month', 'One year', 'Two year'], dtype=object)
+>>> df['PaymentMethod'].unique()
+array(['Electronic check', 'Mailed check', 'Bank transfer (automatic)',
+       'Credit card (automatic)'], dtype=object)
+
+
+
+GBM
+{'max_features': 0.1, 'n_estimators': 50, 'learning_rate': 0.1, 'max_depth': 5, 'min_samples_leaf': 10}
+RFT
+{'max_features': 0.1, 'n_estimators': 15, 'max_depth': 10, 'min_samples_leaf': 15}
