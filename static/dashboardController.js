@@ -29,8 +29,10 @@ app.controller('dashboardController',function($scope,$http,$state,$rootScope){
 		//"PaymentMethod_Credit card (automatic)":0.0,"PaymentMethod_Electronic check":1.0,"PaymentMethod_Mailed check":0.0
 	}
 	$scope.getVariabiles=function(){
+		console.log('get variables')
 		$http.get(SERVER+"/variabiles")
 		.then(function(rsp){
+			console.log('got variables')
 			$scope.variabiles=rsp.data;
 			var gbm=$scope.variabiles.gbm;
 			var forest=$scope.variabiles.randomForestTree;
@@ -53,10 +55,11 @@ app.controller('dashboardController',function($scope,$http,$state,$rootScope){
 		})
 	}
 	$scope.analyse=function(){
+		console.log('get matrix')
 		$http.get(SERVER+'/getMAtrix')
 		.then(function(rsp){
 			$scope.matrix=rsp.data;
-
+			console.log('got matrix');
 			var gbm=$scope.matrix.Gradient;
 			var forest=$scope.matrix.RandomTree;
 			createPerformanceChart(gbm,forest);
@@ -139,6 +142,16 @@ app.controller('dashboardController',function($scope,$http,$state,$rootScope){
 				.catch(function (exp){
 					console.warn(exp);
 				})
+	}
+
+	$scope.recalc=function(){
+		$http.get(SERVER+'/newModel')
+		.then(function(rsp){
+			alert(rsp.data.Success)
+		})
+		.catch(function (exp){
+			console.warn(exp);
+		})
 	}
 window.sc=$scope;
 })

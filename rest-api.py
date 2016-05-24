@@ -8,6 +8,11 @@ from collections import OrderedDict
 # from flask.ext.bcrypt import Bcrypt
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
+from flask.ext.mysql import MySQL
+from shutil import copyfile
+import datetime
+
+mysql = MySQL()
 
 
 class User(object):
@@ -39,7 +44,15 @@ def identity(payload):
 app = Flask(__name__)
 jwt = JWT(app, authenticate, identity)
 app.config["SECRET_KEY"] = "MYSECRET"
-rez=["blabla"]
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234567_8'
+app.config['MYSQL_DATABASE_DB'] = 'digital_services'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+#######################
+rez=[]
+
 varList=['customerID','Churn_converted','tenure', 
 	'MonthlyCharges', 'TotalCharges', 'gender_converted', 
 	'SeniorCitizen_converted', 'Partner_converted', 
@@ -62,7 +75,7 @@ varList=['customerID','Churn_converted','tenure',
 	'PaymentMethod_Credit card (automatic)', 
 	'PaymentMethod_Electronic check', 'PaymentMethod_Mailed check']
 
-
+header="customerID,gender,SeniorCitizen,Partner,Dependents,tenure,PhoneService,MultipleLines,InternetService,OnlineSecurity,OnlineBackup,DeviceProtection,TechSupport,StreamingTV,StreamingMovies,Contract,PaperlessBilling,PaymentMethod,MonthlyCharges,TotalCharges,Churn"
 
 
 
@@ -72,10 +85,33 @@ varList=['customerID','Churn_converted','tenure',
 def index():
     return app.send_static_file('index.html') 
 
-@app.route('/login')
-@jwt_required()
-def checkUser():
-	return json.dumps({"success":"true"})
+# @app.route('/login')
+# @jwt_required()
+# def checkUser():
+# 	return json.dumps({"success":"true"})
+
+@app.route('/newModel',methods=['GET'])
+def createNewModel():
+	exportDatas()
+	global rez
+	rez=cp.centralFlow()
+	response={"Success":"Both models were recalculated"}
+	return json.dumps(response)
+
+def exportDatas():
+	conn=mysql.connect()
+	cursor=conn.cursor()
+	
+	now = datetime.datetime.now()
+	filename='exportedDB_'+str(now.year)+"_"+str(now.month)+"_"+str(now.day)+"_"+str(now.hour)+"_"+str(now.minute)+"_"+str(now.second)+".csv"
+	print("File name ="+str(filename))
+	cursor.callproc('sp_exportDB',(filename,))
+	copyfile('/tmp/'+filename,'/home/bogdan/Desktop/licenta/datas.csv')
+	with open('/home/bogdan/Desktop/licenta/datas.csv', 'r+') as f:
+		content = f.read()
+		f.seek(0, 0)
+		f.write(header + '\n' + content)
+
 
 @app.route('/getMAtrix',methods=['GET'])
 # @jwt_required()

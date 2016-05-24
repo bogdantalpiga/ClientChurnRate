@@ -17,6 +17,7 @@ def cleanData( adresa ):
 	df.info()
 	
 	cols=df.columns.tolist()
+
 	for column in cols:
 		if df[column].unique().size == 2:
 			df[column+'_converted']=df[column].map({df[column].unique()[0]:0,
